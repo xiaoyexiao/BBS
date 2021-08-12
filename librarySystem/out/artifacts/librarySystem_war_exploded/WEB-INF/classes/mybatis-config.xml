@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <package name="com.library.pojo"/>
+    </typeAliases>
+
+    <mappers>
+        <mapper class="com.library.mapper.BookMapper"/>
+        <mapper class="com.library.mapper.StudentMapper"/>
+        <mapper class="com.library.mapper.ManagerMapper"/>
+        <mapper class="com.library.mapper.BorrowMapper"/>
+        <mapper class="com.library.mapper.CollectMapper"/>
+        <mapper class="com.library.mapper.EbookMapper"/>
+    </mappers>
+</configuration>

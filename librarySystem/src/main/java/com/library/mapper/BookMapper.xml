@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.BookMapper">
+
+    <select id="getBookByID" resultMap="bookObject">
+        select * from books
+        where no = #{bookID};
+    </select>
+
+    <select id="listBooks" resultMap="bookObject">
+        select * from books;
+    </select>
+    
+    <insert id="insertBook" useGeneratedKeys="true" keyProperty="no" parameterType="Book">
+        insert into books(`name`, `author`,`category`, `length`, `publish`,`located`,`summary`)
+        values (#{name}, #{author}, #{category}, #{length}, #{publisher}, #{located}, #{summary})
+    </insert>
+
+    <select id="getBookByKeyword" parameterType="String" resultMap="bookObject">
+        select *
+        from books
+        where `name` like concat('%',#{keyword},'%');
+    </select>
+
+    <delete id="deleteBook">
+        delete from `books`
+        where no=#{bookID};
+    </delete>
+
+    <select id="listCategories" resultType="java.lang.String">
+        select `category`
+        from `books`;
+    </select>
+
+    <resultMap id="bookObject" type="Book">
+        <id property="no" column="no"/>
+        <result property="publisher" column="publish"/>
+        <result property="publishDate" column="publish_date"/>
+    </resultMap>
+
+</mapper>

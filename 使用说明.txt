@@ -1,0 +1,7 @@
+librarySystem为后端项目文件，library.war是打包的war包
+BookBorrowingSystem为前端文件项目，需要nodejs的环境支持，项目文件已上传至github（https://github.com/xiaoyexiao/BookBorrowingSystem）
+项目上传至阿里云服务器（http://112.74.32.189/#/），打开即可运行，
+由于带宽限制，打开网址时请先等待10s左右再登录。
+学生账号：201827010000 密码：123456
+管理员账号2018 密码：123
+数据库：IP地址：112.74.32.189 端口3306 用户名：root 密码：admin123

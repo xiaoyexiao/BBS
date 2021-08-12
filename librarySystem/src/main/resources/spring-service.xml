@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置扫描service的包-->
+    <context:component-scan base-package="com.library.service"/>
+
+    <!--将业务类注入到spring-->
+    <bean id="bookServiceImpl" class="com.library.service.BookServiceImpl">
+        <property name="mapper" ref="bookMapper"/>
+    </bean>
+    <bean id="studentServiceImpl" class="com.library.service.StudentServiceImpl">
+        <property name="mapper" ref="studentMapper"/>
+    </bean>
+    <bean id="managerServiceImpl" class="com.library.service.ManagerServiceImpl">
+        <property name="mapper" ref="managerMapper"/>
+        <property name="borrowMapper" ref="borrowMapper"/>
+        <property name="studentMapper" ref="studentMapper"/>
+    </bean>
+    <bean id="borrowServiceImpl" class="com.library.service.BorrowServiceImpl">
+        <property name="mapper" ref="borrowMapper"/>
+        <property name="studentMapper" ref="studentMapper"/>
+    </bean>
+    <bean id="collectServiceImpl" class="com.library.service.CollectServiceImpl">
+        <property name="mapper" ref="collectMapper"/>
+    </bean>
+    <bean id="ebookServiceImpl" class="com.library.service.EbookServiceImpl">
+        <property name="ebookMapper" ref="ebookMapper"/>
+    </bean>
+
+
+    <!--声明事务配置-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="txPointcut" expression="execution(* com.library.mapper.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+</beans>

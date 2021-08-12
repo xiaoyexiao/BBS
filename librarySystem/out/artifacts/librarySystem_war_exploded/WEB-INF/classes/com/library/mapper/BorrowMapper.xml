@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.BorrowMapper">
+
+    <resultMap id="book" type="Book" autoMapping="true">
+        <id property="no" column="no"/>
+        <result property="publisher" column="publish"/>
+        <result property="publishDate" column="publish_date"/>
+    </resultMap>
+    <resultMap id="borrowBook" type="Borrow" >
+        <id property="order" column="order"/>
+        <result property="studentNo" column="student_no"/>
+        <result property="borrowDate" column="borrow_date"/>
+        <result property="resting" column="resting"/>
+        <result property="visible" column="visible"/>
+        <result property="status" column="status"/>
+        <association  property="book" javaType="Book" resultMap="book"/>
+    </resultMap>
+
+    <select id="getBorrowBooksByStudentID" resultMap="borrowBook" parameterType="String">
+        select B.*,T.*
+        from books B ,borrow T
+        where B.no = book_no and student_no = #{number};
+    </select>
+
+    <update id="updateRecordOnVisible" >
+        update borrow
+        set visible=false
+        where `order`=#{order};
+    </update>
+
+    <select id="getBorrowRecordByBook" resultMap="borrowBook">
+        select *
+        from borrow
+        where `book_no`=#{number} and `status`=false
+    </select>
+
+    <select id="getAllRecord" resultMap="borrowBook">
+        select B.*,T.*
+        from books B ,borrow T
+        where B.no = book_no;
+    </select>
+
+    <update id="updateResting" >
+        update borrow
+        set `resting`=`resting`+30
+        where `order`=#{order} and `resting`!=90;
+    </update>
+
+    <insert id="saveBorrowRecord" >
+        insert into `borrow`(book_no,student_no,borrow_date)
+        values (#{bookID},#{account}, #{date,jdbcType=DATE});
+    </insert>
+</mapper>

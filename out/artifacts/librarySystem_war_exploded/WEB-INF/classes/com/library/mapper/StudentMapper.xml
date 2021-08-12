@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.StudentMapper">
+    <select id="getStudentById" resultMap="studentObject">
+        select * from students
+        where number = #{number};
+    </select>
+
+    <insert id="insertStudent" parameterType="Student">
+        insert into students(`nickname`,`number`,`name`,`password`,`email`,`phone`,`grade`,`class`,`major`)
+        values (#{nickname},#{number},#{name},#{password},#{email},#{phone},#{grade},#{clazz},#{major});
+    </insert>
+
+    <select id="getAllStudent" resultMap="studentObject">
+        select * from students;
+    </select>
+    <select id="getStudentName" resultType="java.lang.String">
+        select `name`
+        from students
+        where number = #{number};
+    </select>
+    <resultMap id="studentObject" type="Student">
+        <id property="number" column="number"/>
+        <result property="clazz" column="class"/>
+    </resultMap>
+</mapper>
